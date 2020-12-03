@@ -2,30 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.SceneManagement;
+using UnityEngine.UI;
 
 public class Presenter : MonoBehaviour
 {
     private bool isCalledOnce = false;
+    private string jsonPlayer;
     void Start()
     {
-        string x = "yoshio";
-        // 保存
-        PlayerPrefs.SetString("name", x);
-        PlayerPrefs.Save();
-        // もし、classや配列を保存したい場合はjson化する
-        
-
+        // Player の生成
+        PlayerModel player = new PlayerModel();
+        jsonPlayer = JsonUtility.ToJson(player);
+        Debug.Log("Create player" + jsonPlayer);
     }
 
     void Update()
     {
-        // 一回だけ呼ぶ
-        if (!isCalledOnce)
-        {
-            // 保存したデータをロードする
-            string playerName = PlayerPrefs.GetString("name");
-            Debug.Log(playerName);
+        if (!isCalledOnce) {
+            // Playerの復元
+            PlayerModel player = JsonUtility.FromJson<PlayerModel>(jsonPlayer);
+            Debug.Log("Restore Player" + player);
             isCalledOnce = true;
         }
+
     }
+}
+
+[SerializeField]
+public class PlayerModel
+{
+    [SerializeField]
+    int hp;
+    [SerializeField]
+    int at;
+    [SerializeField]
+    int currentStage;
 }
