@@ -5,14 +5,27 @@ using UnityEditor.SceneManagement;
 
 public class Presenter : MonoBehaviour
 {
-    [SerializeField] GameObject imagePrefab;
-    [SerializeField] Transform parent;
+    private bool isCalledOnce = false;
     void Start()
     {
-        // オブジェクトの生成
-        GameObject image = Instantiate(imagePrefab);
+        string x = "yoshio";
+        // 保存
+        PlayerPrefs.SetString("name", x);
+        PlayerPrefs.Save();
+        // もし、classや配列を保存したい場合はjson化する
+        
 
-        // 親要素の変更
-        image.transform.SetParent(parent, false);
+    }
+
+    void Update()
+    {
+        // 一回だけ呼ぶ
+        if (!isCalledOnce)
+        {
+            // 保存したデータをロードする
+            string playerName = PlayerPrefs.GetString("name");
+            Debug.Log(playerName);
+            isCalledOnce = true;
+        }
     }
 }
