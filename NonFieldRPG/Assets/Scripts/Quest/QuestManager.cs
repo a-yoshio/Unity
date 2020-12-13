@@ -12,7 +12,7 @@ public class QuestManager : MonoBehaviour
     // 敵に遭遇するテーブル：-1なら遭遇しない、０なら遭遇
     int[] encountTable = { -1, -1, 0, -1, 0, -1 };
     int currentStage = 0; // 現在のステージ進行度
-    private void Starg() {
+    private void Start() {
         stageUI.UpdateUI(currentStage);
     }
     
